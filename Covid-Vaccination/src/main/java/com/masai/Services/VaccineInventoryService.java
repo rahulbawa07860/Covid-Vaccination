@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.masai.Exceptions.LoginException;
+import com.masai.Exceptions.VaccinationCenterException;
 import com.masai.Exceptions.VaccineInventoryException;
 import com.masai.Models.VaccineInventory;
 public interface VaccineInventoryService {

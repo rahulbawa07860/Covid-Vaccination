@@ -5,16 +5,19 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.MemberException;
 import com.masai.Models.Member;
+import com.masai.Repository.IdCardRepo;
 import com.masai.Repository.MemberRepo;
+import com.masai.Repository.VaccineRegistrationRepository;
 import com.masai.dto.MemberUpdateDTO;
 
 @Service
 public class MemberServiceImpl implements MemberServices{
 
 	@Autowired
-	private VaccineRegistrationRepo vrr;
+	private VaccineRegistrationRepository vrr;
 	
 	@Autowired
 	private CurrentUserSessionRepo cusr;
@@ -27,7 +30,7 @@ public class MemberServiceImpl implements MemberServices{
 	
 	
 	@Override
-	public Member getMemberById(String key, int Id) throws LoginException, MemberException {
+	public Member getMemberById(String key, int Id) throws MemberException {
 		// TODO Auto-generated method stub
 		CurrentUserSession cus = cusr.findByUuid(key);
 		
@@ -41,9 +44,9 @@ public class MemberServiceImpl implements MemberServices{
 	}
 
 	@Override
-	public Member getMemberByAadharNo(Long aadharNo) throws MemberException {
+	public Member getMemberByAadharNo(String aadharNo) throws MemberException {
 		// TODO Auto-generated method stub
-		Member member = mr.findByAadharCardNo(aadharNo);
+		Member member = mr.findByAdharcardNo(aadharNo);
 		
 		if(member==null) throw new MemberException("No member found with aadhar number "+aadharNo);
 		
@@ -92,7 +95,7 @@ public class MemberServiceImpl implements MemberServices{
 	}
 
 	@Override
-	public Member updateMember(String key, Integer cardId, MemberUpdateDTO memberdto) throws LoginException, IdCardException, MemberException {
+	public Member updateMember(String key, Integer cardId, MemberUpdateDTO memberdto) throws LoginException, MemberException {
 		// TODO Auto-generated method stub
 		CurrentUserSession cus = cusr.findByUuid(key);
 		
@@ -102,12 +105,12 @@ public class MemberServiceImpl implements MemberServices{
 		
 		if(member==null) throw new MemberException("No member with cardId "+cardId);
 		
-		member.get().getIdCard().setName(MemberUpdateDTO.getName());
-		member.get().getIdCard().setAddress(MemberUpdateDTO.getAddress());
-		member.get().getIdCard().setCity(MemberUpdateDTO.getCity());
-		member.get().getIdCard().setDateOfBirth(MemberUpdateDTO.getDateOfBirth());
-		member.get().getIdCard().setGender(MemberUpdateDTO.getGender());
-		member.get().getIdCard().setState(MemberUpdateDTO.getState());
+		member.get().getIdCard().setName(memberdto.getName());
+		member.get().getIdCard().setAddress(memberdto.getAddress());
+		member.get().getIdCard().setCity(memberdto.getCity());
+		member.get().getIdCard().setDateOfBirth(memberdto.getDobDateOfBirth());
+		member.get().getIdCard().setGender(memberdto.getGender());
+		member.get().getIdCard().setState(memberdto.getState());
 		
 		mr.save(member.get());
 		return member.get();

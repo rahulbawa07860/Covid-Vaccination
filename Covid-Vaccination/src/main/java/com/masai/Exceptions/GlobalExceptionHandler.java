@@ -70,5 +70,37 @@ public class GlobalExceptionHandler {
 	
 	return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
  }
-
+ @ExceptionHandler(VaccineRegistrationException.class)
+	public ResponseEntity<MyErrorDetails> VaccineRegistrationExcHandler( VaccineRegistrationException ce , WebRequest wr ){
+		
+		System.out.println("Inside VaccineRegistrationExcHandler method of GlobalExceptionHandler class");
+		
+		MyErrorDetails err = new MyErrorDetails();
+		err.setTimeStamp(LocalDateTime.now());
+		err.setMsg(ce.getMessage());
+		err.setDetails(wr.getDescription(false));
+		
+		return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
+	}
+ @ExceptionHandler(PanCardException.class)
+	public ResponseEntity<MyErrorDetails> pancardException(PanCardException ce, WebRequest req){
+		
+		MyErrorDetails err = new MyErrorDetails();
+		err.setTimeStamp(LocalDateTime.now());
+		err.setMsg(ce.getMessage());
+		err.setDetails(req.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(AdharCardException.class)
+	public ResponseEntity<MyErrorDetails> pancardException(AdharCardException ce, WebRequest req){
+		
+		MyErrorDetails err = new MyErrorDetails();
+		err.setTimeStamp(LocalDateTime.now());
+		err.setMsg(ce.getMessage());
+		err.setDetails(req.getDescription(false));
+		
+		return new ResponseEntity<MyErrorDetails>(err, HttpStatus.BAD_REQUEST);
+	}
 }

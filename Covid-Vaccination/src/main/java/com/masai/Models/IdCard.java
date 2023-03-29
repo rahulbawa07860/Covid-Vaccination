@@ -1,6 +1,7 @@
 package com.masai.Models;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.validation.constraints.NotEmpty;
@@ -30,6 +31,7 @@ public class IdCard {
 	private LocalDate DateOfBirth ;
 	
 	@NotNull(message = "Gender can't be null")
+	@Enumerated
 	private Gender gender;
 	
 	@NotEmpty(message =  "Address is mandatory")
@@ -74,8 +76,8 @@ public class IdCard {
 		return DateOfBirth;
 	}
 
-	public void setDateOfBirth(LocalDate dateOfBirth) {
-		DateOfBirth = dateOfBirth;
+	public void setDateOfBirth(Date date) {
+		DateOfBirth = date;
 	}
 
 	public Gender getGender() {

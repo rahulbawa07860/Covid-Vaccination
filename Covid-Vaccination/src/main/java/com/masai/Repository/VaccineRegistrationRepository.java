@@ -8,7 +8,6 @@ import com.masai.Models.VaccineRegistration;
 import com.masai.Exceptions.*;
 
 @Repository
-
 public interface VaccineRegistrationRepository extends JpaRepository<VaccineRegistration, Integer> {
 
 		public VaccineRegistration findByMobileno(String mobileno);

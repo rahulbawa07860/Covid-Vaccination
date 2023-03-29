@@ -1,6 +1,6 @@
 package com.masai.Services;
 
-import java.lang.reflect.Member;
+import com.masai.Models.Member;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,8 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.masai.Exceptions.AppointmentException;
+import com.masai.Exceptions.MemberException;
+import com.masai.Exceptions.VaccinationCenterException;
+import com.masai.Exceptions.VaccineInventoryException;
 import com.masai.Models.Appointment;
+import com.masai.Models.VaccinationCenter;
+import com.masai.Models.VaccineInventory;
+import com.masai.Models.VaccineRegistration;
 import com.masai.Repository.AppointmentRepository;
+import com.masai.Repository.MemberRepo;
+import com.masai.Repository.VaccinationCenterRepository;
+import com.masai.Repository.VaccineInventoryRepository;
+import com.masai.Repository.VaccineRegistrationRepository;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {

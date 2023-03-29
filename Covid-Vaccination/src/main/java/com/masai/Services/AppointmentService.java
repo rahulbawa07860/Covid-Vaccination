@@ -5,6 +5,9 @@ import java.util.List;
 import javax.security.auth.login.LoginException;
 
 import com.masai.Exceptions.AppointmentException;
+import com.masai.Exceptions.MemberException;
+import com.masai.Exceptions.VaccinationCenterException;
+import com.masai.Exceptions.VaccineInventoryException;
 import com.masai.Models.Appointment;
 
 public interface AppointmentService {

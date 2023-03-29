@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.VaccinationCenterException;
 import com.masai.Models.VaccinationCenter;
 import com.masai.Repository.VaccinationCenterRepository;
+import com.masai.Repository.VaccineInventoryRepository;
 
 
-
+@Service
 public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	
 	@Autowired
@@ -21,7 +23,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	private VaccinationCenterRepository vaccineCenterRepo;
 	
 	
-	
+	@Autowired
 	private VaccineInventoryRepository inventoryRepo; 
 	
 	
@@ -33,15 +35,10 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public List<VaccinationCenter> getAllVaccivationCenters(String key)	throws LoginException, VaccinationCenterException {
 		
 		// First we will check logging status here.
-		
 		CurrentUserSession cusession = SessRepo.findByUuid(key);
-		
 		// if Logging OK
-		
 		if(cusession != null) {
-			
 			//if user is member or admin;
-			
 			if(cusession.getAdmin()) {
 				List <VaccinationCenter> centers = vaccineCenterRepo.findAll();
 				
@@ -71,17 +68,11 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public VaccinationCenter getVaccinationCenterById(String key, Integer id) throws LoginException, VaccinationCenterException {
 		
 	   // First we will check logging status here.
-		
 		CurrentUserSession cusession = SessRepo.findByUuid(key);
-		
 		//if logged In then
-		
 		if(cusession != null) {
-			
 			Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(id);
-			
 			//If vaccination center  is present.
-			
 			if(opt.isPresent()) {
 				return opt.get();
 			}else {
@@ -105,9 +96,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	    
 		   // First we will check logging status here.
 		CurrentUserSession cusession = SessRepo.findByUuid(key);
-	
 		if(cusession != null) {
-			
 			//if user is admin or member
 			
 			if(cusession.getAdmin()) {
@@ -131,21 +120,14 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 		
 		  // First we will check logging status here.
 			CurrentUserSession cusession = SessRepo.findByUuid(key);
-			
 			//if logged In then
 			if(cusession != null) {
-				
-				
 				// if user is admin or member;
 				if(cusession.getAdmin()) {
 					
 					Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(center.getCenterCode());
-					
-					
 					if(opt.isPresent()) {
-						
 						VaccinationCenter savedCenter = opt.get();
-						
 						savedCenter.setAddress(center.getAddress());
 						savedCenter.setAppointments(center.getAppointments());
 						savedCenter.setName(center.getName());
@@ -176,22 +158,15 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 		
 		 // First we will check logging status here.
 		CurrentUserSession cusession = SessRepo.findByUuid(key);
-		
 		//if logged In then
 		if(cusession != null) {
-			
 			// if user is admin or member;
 			if(cusession.getAdmin()) {
-				
 				Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(id);
-				
 				if (opt.isPresent()) {
 					VaccinationCenter center = opt.get();
-					
 					vaccineCenterRepo.delete(center);
-					
 					return true;
-					
 					
 				}else {
 					throw new VaccinationCenterException("No Vaccination center found");
