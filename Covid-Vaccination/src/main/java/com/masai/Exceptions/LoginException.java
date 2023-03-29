@@ -1,6 +1,7 @@
 package com.masai.Exceptions;
 
 public class LoginException extends Exception{
+
 	public LoginException() {
 		super();
 	}	
@@ -9,5 +10,6 @@ public class LoginException extends Exception{
 		super(message);
 		
 	}
+
 
 }
