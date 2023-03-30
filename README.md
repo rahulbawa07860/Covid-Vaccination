@@ -39,9 +39,9 @@
 
 ## Contributors
 
-* [Rahul Bawa]
-* [Sahtej]
-* [Alok Rai]
-* [Angel]
-* [Ankush Singh]
+* Rahul Bawa - Team Lead
+* Sahtej
+* Alok Rai
+* Angel
+* Ankush Singh
 
