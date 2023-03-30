@@ -46,6 +46,8 @@
 * Ankush Singh
 
 ## ER Diagram
+<img width="730" alt="image" src="https://user-images.githubusercontent.com/111387553/228755126-7e43b46d-1f5b-4fef-9b3a-1fa367d942a4.png">
+
 
 
 
