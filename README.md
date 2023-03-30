@@ -3,6 +3,14 @@
 * We have developed this REST API for an Covid-19 Vaccination. This API performs all the fundamental CRUD operations of any Online Cab Booking platform with user validation at every step.
 * This project is developed by team of 5 Back-end Developers during  Project Construct week in Masai School 
 
+## Contributors
+
+* Rahul Bawa - Team Lead
+* Sahtej
+* Alok Rai
+* Angel
+* Ankush Singh
+
 ## Tech Stack
 
 * Java
@@ -26,26 +34,23 @@
 
 ## Features
 
-* User and Admin authentication & validation with session uuid having.
+* The system includes authentication and validation for both users and administrators, utilizing session UUIDs.
 * Admin Features:
-    * Administrator Role of the entire application
-    * Only registered admins with valid session token can add/update/delete driver or user from main database
-    * Admin can access the details of different Users, Doctors, Center and Dose.
+    * Aministrators have access to various details pertaining to users, centers, and doses. 
+    * Admin is responsible for overseeing the application as a whole
+    * Only authorized administrators with valid session tokens are able to add, update, or delete drivers or users from the primary database.
     
 * User Features:
-    * Registering themselves with application, and logging in to it.
-    * Viewing list of available Center and booking a Appointment.
-    * Only logged in user can access profile updation and other features.
+    * Users are only able to access certain features once logged in.
+    * This includes the ability to update their profile and view a list of available centers, as well as booking appointments
+    * Users must first register with the application and then login.
+    .
 
-## Contributors
 
-* Rahul Bawa - Team Lead
-* Sahtej
-* Alok Rai
-* Angel
-* Ankush Singh
 
 ## ER Diagram
+ <img width="730" alt="image" src="https://user-images.githubusercontent.com/111387553/228755126-7e43b46d-1f5b-4fef-9b3a-1fa367d942a4.png">
+
 
 
 

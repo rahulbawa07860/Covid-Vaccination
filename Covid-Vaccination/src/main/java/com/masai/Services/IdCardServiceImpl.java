@@ -58,15 +58,20 @@ public class IdCardServiceImpl implements IdCardService {
 
 	@Override
 	public IdCard findIdCardBypanNo(String panNo) throws IdCardException, PanCardException {
-		PanCard pancard = panRepo.findByPanNo(panNo);
+         PanCard pancard = panRepo.findByPanNo(panNo);
 		
 		if(pancard == null) {
 			throw new PanCardException("sorry there is no pan card with that particular ");
 		}else {
-			IdCard idcard = pancard.getIdCard();
-			return idcard;
+			Integer num = pancard.getPanId();
+			Optional<IdCard> opt = idcardRepo.findById(num);
+			if(opt.isPresent()) {
+				IdCard idcard = opt.get();
+				return idcard;
+			}else {
+				throw new IdCardException("sorry there is no id with the particular pan number "+ panNo);
+			}
 		}
-		
 		
 		
 		
