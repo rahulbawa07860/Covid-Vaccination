@@ -1,5 +1,6 @@
 package com.masai.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -11,7 +12,7 @@ public class MemberUpdateDTO {
 	
 	private String name;
 	
-	private Date dobDateOfBirth ;
+	private LocalDate DateOfBirth ;
 	
 	private Gender gender;
 	
@@ -26,10 +27,10 @@ public class MemberUpdateDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public MemberUpdateDTO(String name, Date dobDateOfBirth, Gender gender, String city, String state, String address) {
+	public MemberUpdateDTO(String name, LocalDate DateOfBirth, Gender gender, String city, String state, String address) {
 		super();
 		this.name = name;
-		this.dobDateOfBirth = dobDateOfBirth;
+		this.DateOfBirth = DateOfBirth;
 		this.gender = gender;
 		this.city = city;
 		this.state = state;
@@ -38,7 +39,7 @@ public class MemberUpdateDTO {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(Address, city, dobDateOfBirth, gender, name, state);
+		return Objects.hash(Address, city, DateOfBirth, gender, name, state);
 	}
 
 	@Override
@@ -51,13 +52,13 @@ public class MemberUpdateDTO {
 			return false;
 		MemberUpdateDTO other = (MemberUpdateDTO) obj;
 		return Objects.equals(Address, other.Address) && Objects.equals(city, other.city)
-				&& Objects.equals(dobDateOfBirth, other.dobDateOfBirth) && gender == other.gender
+				&& Objects.equals(DateOfBirth, other.DateOfBirth) && gender == other.gender
 				&& Objects.equals(name, other.name) && Objects.equals(state, other.state);
 	}
 
 	@Override
 	public String toString() {
-		return "MemberUpdateDTO [name=" + name + ", dobDateOfBirth=" + dobDateOfBirth + ", gender=" + gender + ", city="
+		return "MemberUpdateDTO [name=" + name + ", dobDateOfBirth=" + DateOfBirth + ", gender=" + gender + ", city="
 				+ city + ", state=" + state + ", Address=" + Address + "]";
 	}
 
@@ -69,12 +70,12 @@ public class MemberUpdateDTO {
 		this.name = name;
 	}
 
-	public Date getDobDateOfBirth() {
-		return dobDateOfBirth;
+	public LocalDate getDobDateOfBirth() {
+		return DateOfBirth;
 	}
 
-	public void setDobDateOfBirth(Date dobDateOfBirth) {
-		this.dobDateOfBirth = dobDateOfBirth;
+	public void setDobDateOfBirth(LocalDate dobDateOfBirth) {
+		this.DateOfBirth = dobDateOfBirth;
 	}
 
 	public Gender getGender() {

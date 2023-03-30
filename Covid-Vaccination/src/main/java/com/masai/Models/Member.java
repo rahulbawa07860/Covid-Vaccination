@@ -1,5 +1,6 @@
 package com.masai.Models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -24,9 +25,9 @@ public class Member {
 	
 	private Boolean dose2Status = false;
 	
-	private LocalDateTime dose1Date = null;
+	private LocalDate dose1Date = null;
 	
-	private LocalDateTime dose2Date = null;
+	private LocalDate dose2Date = null;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -46,8 +47,8 @@ public class Member {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Member(Integer memberId, Boolean dose1Status, Boolean dose2Status, LocalDateTime dose1Date,
-			LocalDateTime dose2Date, Appointment appointment, Vaccine vaccine, IdCard idCard,
+	public Member(Integer memberId, Boolean dose1Status, Boolean dose2Status, LocalDate dose1Date,
+			LocalDate dose2Date, Appointment appointment, Vaccine vaccine, IdCard idCard,
 			VaccineRegistration vaccineRegistration) {
 		super();
 		this.memberId = memberId;
@@ -85,19 +86,19 @@ public class Member {
 		this.dose2Status = dose2Status;
 	}
 
-	public LocalDateTime getDose1Date() {
+	public LocalDate getDose1Date() {
 		return dose1Date;
 	}
 
-	public void setDose1Date(LocalDateTime dose1Date) {
+	public void setDose1Date(LocalDate dose1Date) {
 		this.dose1Date = dose1Date;
 	}
 
-	public LocalDateTime getDose2Date() {
+	public LocalDate getDose2Date() {
 		return dose2Date;
 	}
 
-	public void setDose2Date(LocalDateTime dose2Date) {
+	public void setDose2Date(LocalDate dose2Date) {
 		this.dose2Date = dose2Date;
 	}
 
