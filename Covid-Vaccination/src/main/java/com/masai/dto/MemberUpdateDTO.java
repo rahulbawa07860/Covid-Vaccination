@@ -1,25 +1,29 @@
 package com.masai.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Objects;
+
+import javax.validation.constraints.Size;
 
 import com.masai.Enums.Gender;
 
-import lombok.Data;
-
 public class MemberUpdateDTO {
 	
+	@Size(min = 2, max = 20, message = "{user.invalid.Name}")
 	private String name;
 	
 	private LocalDate DateOfBirth ;
+
 	
 	private Gender gender;
 	
+	@Size(min = 2, max = 20, message = "{user.invalid.City}")
 	private String city;
 	
+	@Size(min = 2, max = 20, message = "{user.invalid.State}")
 	private String state;
 
+	@Size(min = 2, max = 20, message = "{user.invalid.Address}")
 	private String Address ;
 
 	public MemberUpdateDTO() {

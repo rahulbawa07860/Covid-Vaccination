@@ -11,14 +11,18 @@ import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.VaccinationCenterException;
 import com.masai.Exceptions.VaccineInventoryException;
 import com.masai.Models.VaccinationCenter;
+import com.masai.Models.Vaccine;
+import com.masai.Models.VaccineCount;
 import com.masai.Models.VaccineInventory;
+import com.masai.Repository.CurrentAdminUserSessionRepo;
 import com.masai.Repository.VaccinationCenterRepository;
+import com.masai.Repository.VaccineCountRepository;
 import com.masai.Repository.VaccineInventoryRepository;
 
 @Service
 public class VaccineInventoryServiceImpl implements VaccineInventoryService{
     @Autowired
-	private CurrentUserSessionRepo currentUserSessRepo;
+	private CurrentAdminUserSessionRepo currentAdminUserSessRepo;
     @Autowired
 	private VaccineInventoryRepository vaccineInventoryRepo;
 	@Autowired
@@ -28,7 +32,7 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 	@Override
 	public VaccineCount addVaccineCount(String key, Integer inId, Vaccine v, Integer qty) throws LoginException, VaccineInventoryException {
 		// TODO Auto-generated method stub
-		if(currentUserSessRepo.findByUuid(key)!=null)
+		if(currentAdminUserSessRepo.findByUuid(key)!=null)
 		{
 			VaccineInventory inventory=vaccineInventoryRepo.findById(inId).orElseThrow(()-> new VaccineInventoryException("sInventory Not Found"));
 			List<VaccineCount> counts= vaccineCountRepo.findByInventory(inventory).stream().filter(count->count.getVaccine().equals(v)).collect(Collectors.toList());
@@ -40,15 +44,15 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 		    	c.setInId(inId);
 		    	c.setInventory(inventory);
 		    	VaccineCount eneter = vaccineCountRepo.save(c);
-		    	VaccineInventory enetered = vaccineInventoryRepo.save(inventory);
-		    	return enetered;
+		    	vaccineInventoryRepo.save(inventory);
+		    	return eneter;
 		    	
 		    }
 		    else {
 				counts.get(0).setQuantity(counts.get(0).getQuantity()+qty);
 				VaccineCount eneter = vaccineCountRepo.save(counts.get(0));
-				VaccineInventory enetered = vaccineInventoryRepo.save(inventory);
-				return enetered;
+				vaccineInventoryRepo.save(inventory);
+				return eneter;
 			}
 		}else {
 			throw new LoginException("Login as Admin please");
@@ -58,7 +62,7 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 	@Override
 	public List<VaccineInventory> getInventoryByDate(String key, LocalDate date) throws LoginException {
 		// TODO Auto-generated method stub
-		if(currentUserSessRepo.findByUuid(key)!=null)
+		if(currentAdminUserSessRepo.findByUuid(key)!=null)
 		{
 			return vaccineInventoryRepo.findByDate(date);
 			
@@ -70,7 +74,7 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 	@Override
 	public VaccineInventory addInventory(String key, VaccineInventory inventory) throws LoginException, VaccinationCenterException {
 		// TODO Auto-generated method stub
-		if(currentUserSessRepo.findByUuid(key)!=null)
+		if(currentAdminUserSessRepo.findByUuid(key)!=null)
 		{
 			return vaccineInventoryRepo.save(inventory);
 			
@@ -82,7 +86,7 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 	@Override
 	public VaccineInventory getInventoryByVaccinationCenter(String key, Integer id) throws LoginException, VaccinationCenterException {
 		// TODO Auto-generated method stub
-		if(currentUserSessRepo.findByUuid(key)!=null)
+		if(currentAdminUserSessRepo.findByUuid(key)!=null)
 		{
 			VaccinationCenter vaccinationCenter = vaccinationCenterRepo.findById(id).orElseThrow(()-> new VaccinationCenterException("Inventory not found"));
 			return vaccinationCenter.getInventory();
@@ -95,7 +99,7 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 	@Override
 	public List<VaccineCount> getVaccineCountByCenter(String key, VaccineInventory in) throws LoginException, VaccineInventoryException {
 		// TODO Auto-generated method stub
-				if(currentUserSessRepo.findByUuid(key)!=null)
+				if(currentAdminUserSessRepo.findByUuid(key)!=null)
 				{
 					List<VaccineCount> list = vaccineCountRepo.findByInventory(in);
 					if(list.size()!=0)
@@ -114,7 +118,7 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 	@Override
 	public List<VaccineInventory> getAllVaccineInventories(String key) throws LoginException {
 		// TODO Auto-generated method stub
-		if(currentUserSessRepo.findByUuid(key)!=null)
+		if(currentAdminUserSessRepo.findByUuid(key)!=null)
 		{
 			return vaccineInventoryRepo.findAll();
 			

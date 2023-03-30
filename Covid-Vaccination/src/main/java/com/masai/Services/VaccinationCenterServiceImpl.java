@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.VaccinationCenterException;
+import com.masai.Models.CurrentAdminUserSession;
+import com.masai.Models.CurrentMemberUserSession;
 import com.masai.Models.VaccinationCenter;
+import com.masai.Repository.CurrentAdminUserSessionRepo;
+import com.masai.Repository.CurrentMemberUserSessionRepo;
 import com.masai.Repository.VaccinationCenterRepository;
 import com.masai.Repository.VaccineInventoryRepository;
 
@@ -17,7 +21,10 @@ import com.masai.Repository.VaccineInventoryRepository;
 public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	
 	@Autowired
-	private CurrentUserSessionRepo SessRepo;
+	private CurrentMemberUserSessionRepo SessRepo;
+	
+	@Autowired
+	private CurrentAdminUserSessionRepo AessRepo;
 	
 	@Autowired
 	private VaccinationCenterRepository vaccineCenterRepo;
@@ -35,11 +42,11 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public List<VaccinationCenter> getAllVaccivationCenters(String key)	throws LoginException, VaccinationCenterException {
 		
 		// First we will check logging status here.
-		CurrentUserSession cusession = SessRepo.findByUuid(key);
+		CurrentMemberUserSession cusession = SessRepo.findByUuid(key);
 		// if Logging OK
 		if(cusession != null) {
 			//if user is member or admin;
-			if(cusession.getAdmin()) {
+			
 				List <VaccinationCenter> centers = vaccineCenterRepo.findAll();
 				
 				// check if center is not empty the.
@@ -50,9 +57,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 				}
 				
 				
-			}else {
-				throw new LoginException("Please admin login here !!!!");
-			}
+			
 			
 		}else {
 			throw new LoginException("Please Loging First !!!!");
@@ -68,7 +73,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public VaccinationCenter getVaccinationCenterById(String key, Integer id) throws LoginException, VaccinationCenterException {
 		
 	   // First we will check logging status here.
-		CurrentUserSession cusession = SessRepo.findByUuid(key);
+		CurrentMemberUserSession cusession = SessRepo.findByUuid(key);
 		//if logged In then
 		if(cusession != null) {
 			Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(id);
@@ -95,19 +100,16 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public VaccinationCenter addNewVaccinationCenter(String key, VaccinationCenter center) throws LoginException, VaccinationCenterException {
 	    
 		   // First we will check logging status here.
-		CurrentUserSession cusession = SessRepo.findByUuid(key);
+		CurrentAdminUserSession cusession = AessRepo.findByUuid(key);
 		if(cusession != null) {
 			//if user is admin or member
-			
-			if(cusession.getAdmin()) {
+			return vaccineCenterRepo.save(center);
 				
-				return vaccineCenterRepo.save(center);
-			}else {
-				throw new LoginException("Please Amin Login here first");
-			}
 		}else {
-			throw new LoginException("Please Login first !");
+			throw new LoginException("Please Login as admin first!");
 		}
+		
+		
 	}
 	
 	
@@ -119,11 +121,11 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public VaccinationCenter updateVaccinationCenter(String key, VaccinationCenter center) throws LoginException, VaccinationCenterException {
 		
 		  // First we will check logging status here.
-			CurrentUserSession cusession = SessRepo.findByUuid(key);
+			CurrentMemberUserSession cusession = SessRepo.findByUuid(key);
 			//if logged In then
 			if(cusession != null) {
 				// if user is admin or member;
-				if(cusession.getAdmin()) {
+				
 					
 					Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(center.getCenterCode());
 					if(opt.isPresent()) {
@@ -138,9 +140,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 						throw new VaccinationCenterException("No any vacination center here!!!");
 					}
 					
-				}else {
-					   throw new LoginException("Please Login as admin");
-				}
+				
 			}else {
 				throw new LoginException("please Login First");
 			}
@@ -157,11 +157,11 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public Boolean deleteVaccinationCenter(String key, Integer id) throws LoginException, VaccinationCenterException {
 		
 		 // First we will check logging status here.
-		CurrentUserSession cusession = SessRepo.findByUuid(key);
+		CurrentMemberUserSession cusession = SessRepo.findByUuid(key);
 		//if logged In then
 		if(cusession != null) {
 			// if user is admin or member;
-			if(cusession.getAdmin()) {
+			
 				Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(id);
 				if (opt.isPresent()) {
 					VaccinationCenter center = opt.get();
@@ -172,9 +172,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 					throw new VaccinationCenterException("No Vaccination center found");
 				}
 				
-			}else {
-				throw new LoginException("Please login as admin first");
-			}
+			
 			
 		}else {
 			throw new LoginException("Please Login first");

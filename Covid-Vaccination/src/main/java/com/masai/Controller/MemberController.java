@@ -1,5 +1,7 @@
 package com.masai.Controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.MemberException;
 import com.masai.Models.Member;
 import com.masai.Services.MemberServices;
@@ -32,16 +35,16 @@ public class MemberController {
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getMemberByAadharNo")
-	public ResponseEntity<Member> getMemberByAadharNoHandler(@RequestParam("aadharNo") Long aadharNo) throws MemberException {
-		Member member = memberServices.getMemberByAadharNo(aadharNo);
+	@GetMapping("/getMemberByAadharNo/{key}")
+	public ResponseEntity<Member> getMemberByAadharNoHandler(@Valid @PathVariable String key, @RequestParam("aadharNo") String aadharNo) throws MemberException, LoginException {
+		Member member = memberServices.getMemberByAadharNo(key,aadharNo);
 		
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
 	}
 	
-	@GetMapping("/getMemberByPanNo")
-	public ResponseEntity<Member> getMemberByPanNoHandler(@RequestParam("panNo") String panNo) throws MemberException {
-		Member member = memberServices.getMemberByPanNo(panNo);
+	@GetMapping("/getMemberByPanNo/{key}")
+	public ResponseEntity<Member> getMemberByPanNoHandler(@Valid @PathVariable String key, @RequestParam("panNo") String panNo) throws MemberException, LoginException {
+		Member member = memberServices.getMemberByPanNo(key,panNo);
 		
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
 	}

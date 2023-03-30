@@ -7,7 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.MemberException;
+import com.masai.Models.CurrentAdminUserSession;
+import com.masai.Models.CurrentMemberUserSession;
+import com.masai.Models.IdCard;
 import com.masai.Models.Member;
+import com.masai.Repository.CurrentAdminUserSessionRepo;
+import com.masai.Repository.CurrentMemberUserSessionRepo;
 import com.masai.Repository.IdCardRepo;
 import com.masai.Repository.MemberRepo;
 import com.masai.Repository.VaccineRegistrationRepository;
@@ -17,36 +22,45 @@ import com.masai.dto.MemberUpdateDTO;
 public class MemberServiceImpl implements MemberServices{
 
 	@Autowired
-	private VaccineRegistrationRepository vrr;
+	private VaccineRegistrationRepository vaccineRegistrationRepo;
 	
 	@Autowired
-	private CurrentUserSessionRepo cusr;
+	private CurrentAdminUserSessionRepo cusrAdmin;
 	
 	@Autowired
-	private IdCardRepo icr;
+	private CurrentMemberUserSessionRepo cusrMember;
 	
 	@Autowired
-	private MemberRepo mr;
+	private IdCardRepo idCardRepo;
+	
+	@Autowired
+	private MemberRepo memberRepo;
 	
 	
 	@Override
-	public Member getMemberById(String key, int Id) throws MemberException {
+	public Member getMemberById(String key, Integer cardId) throws MemberException, LoginException {
 		// TODO Auto-generated method stub
-		CurrentUserSession cus = cusr.findByUuid(key);
+		CurrentMemberUserSession cusMember = cusrMember.findByUuid(key);
 		
-		if(cus==null) throw new LoginException("Please loging first");
+		if(cusMember==null) throw new LoginException("Please loging first");
 		
-		Optional<Member> member = mr.findById(Id);
+		Optional<IdCard> idCard = idCardRepo.findById(cardId);
 		
-		if(member==null) throw new MemberException("No member found with id: "+Id);
+		Optional<Member> member = memberRepo.findByIdCard(idCard);
+		
+		if(member==null) throw new MemberException("No member found with cardID: "+cardId);
 		
 		return member.get();
 	}
 
 	@Override
-	public Member getMemberByAadharNo(String aadharNo) throws MemberException {
+	public Member getMemberByAadharNo(String key, String aadharNo) throws MemberException, LoginException {
 		// TODO Auto-generated method stub
-		Member member = mr.findByAdharcardNo(aadharNo);
+		CurrentAdminUserSession cusAdmin = cusrAdmin.findByUuid(key);
+		
+		if(cusAdmin==null) throw new LoginException("Please login first");
+		
+		Member member = memberRepo.findByAdharcardNo(aadharNo);
 		
 		if(member==null) throw new MemberException("No member found with aadhar number "+aadharNo);
 		
@@ -55,9 +69,13 @@ public class MemberServiceImpl implements MemberServices{
 	}
 
 	@Override
-	public Member getMemberByPanNo(String panNo) throws MemberException {
+	public Member getMemberByPanNo(String key, String panNo) throws MemberException, LoginException {
 		// TODO Auto-generated method stub
-		Member member = mr.findByPanNo(panNo);
+		CurrentAdminUserSession cusAdmin = cusrAdmin.findByUuid(key);
+		
+		if(cusAdmin==null) throw new LoginException("Please login first");
+		
+		Member member = memberRepo.findByPanNo(panNo);
 		
 		if(member==null) throw new MemberException("No member found with PAN "+panNo);
 		
@@ -69,25 +87,27 @@ public class MemberServiceImpl implements MemberServices{
 		// TODO Auto-generated method stub
 		if(member==null) throw new MemberException("Please enter a valid member");
 		
-		return mr.save(member);
+		return memberRepo.save(member);
 	}
 
 	
 
 	@Override
-	public boolean deleteMember(String key, int Id) {
+	public boolean deleteMember(String key, Integer cardId) throws MemberException, LoginException {
 		// TODO Auto-generated method stub
 		Boolean flag = false;
 		
-		CurrentUserSession cus = cusr.findByUuid(key);
+		CurrentMemberUserSession cusMember = cusrMember.findByUuid(key);
 		
-		if(cus==null) throw new LoginException("Please loging first");
+		if(cusMember==null) throw new LoginException("Please loging first");
 		
-		Optional<Member> member = mr.findById(Id);
+		Optional<IdCard> idCard = idCardRepo.findById(cardId);
+		
+		Optional<Member> member = memberRepo.findByIdCard(idCard);
 		
 		if(member==null) throw new MemberException("Please enter a valid member ID");
 		
-		mr.deleteById(Id);
+		memberRepo.deleteById(member.get().getMemberId());
 		
 		flag = true;
 		
@@ -97,11 +117,13 @@ public class MemberServiceImpl implements MemberServices{
 	@Override
 	public Member updateMember(String key, Integer cardId, MemberUpdateDTO memberdto) throws LoginException, MemberException {
 		// TODO Auto-generated method stub
-		CurrentUserSession cus = cusr.findByUuid(key);
+		CurrentMemberUserSession cusMember = cusrMember.findByUuid(key);
 		
-		if(cus==null) throw new LoginException("Please loging first");
+		if(cusMember==null) throw new LoginException("Please loging first");
 		
-		Optional<Member> member = mr.findById(cardId);
+		Optional<IdCard> idCard = idCardRepo.findById(cardId);
+		
+		Optional<Member> member = memberRepo.findByIdCard(idCard);
 		
 		if(member==null) throw new MemberException("No member with cardId "+cardId);
 		
@@ -112,7 +134,7 @@ public class MemberServiceImpl implements MemberServices{
 		member.get().getIdCard().setGender(memberdto.getGender());
 		member.get().getIdCard().setState(memberdto.getState());
 		
-		mr.save(member.get());
+		memberRepo.save(member);
 		return member.get();
 	}
 
