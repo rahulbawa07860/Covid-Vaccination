@@ -61,13 +61,13 @@ public class AppointmentServiceImpl implements AppointmentService {
 							VaccineInventory inventory = vaccinationCenter.getInventory();
 							if(!inventory.getVaccineCount().isEmpty())
 							{
-								if(member.isDose1status())
+								if(member.getDose1Status())
 								{
-									member.setDose2status(appointment.getBookingStatus());
+									member.setDose2Status(appointment.getBookingStatus());
 								}
 								else {
-									member.setDose1status(appointment.getBookingStatus());
-									member.setDose2date(appointment.getDateOfBooking().plusMonths(3));
+									member.setDose1Status(appointment.getBookingStatus());
+									member.setDose2Date(appointment.getDateOfBooking().plusMonths(3));
 								}
 								memberRepo.save(member);
 								appointment.setMember(member);
@@ -100,7 +100,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public List<Appointment> getAllAppointments(String Key) throws AppointmentException, LoginException {
 		// TODO Auto-generated method stub
-		CurrentUserSession  currentSession = currSessRepo.findByUuid(key);
+		CurrentUserSession  currentSession = currSessRepo.findByUuid(Key);
 		if(currentSession!=null)
 		{
 			
@@ -129,7 +129,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment updateAppointment(String Key, String aadharNo, Appointment appointment)
 			throws AppointmentException, LoginException {
 		// TODO Auto-generated method stub
-		CurrentUserSession  currentSession = currSessRepo.findByUuid(key);
+		CurrentUserSession  currentSession = currSessRepo.findByUuid(Key);
 		if(currentSession!=null)
 		{
 			if(!currentSession.getAdmin())

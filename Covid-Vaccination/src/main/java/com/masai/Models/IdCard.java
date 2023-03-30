@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +28,7 @@ public class IdCard {
 	@Size(min = 3, max = 20, message = "Name length should be of size 3-20")
 	private String Name;
 	
-	
+	@Past
 	private LocalDate DateOfBirth ;
 	
 	@NotNull(message = "Gender can't be null")
@@ -76,7 +77,7 @@ public class IdCard {
 		return DateOfBirth;
 	}
 
-	public void setDateOfBirth(Date date) {
+	public void setDateOfBirth(LocalDate date) {
 		DateOfBirth = date;
 	}
 

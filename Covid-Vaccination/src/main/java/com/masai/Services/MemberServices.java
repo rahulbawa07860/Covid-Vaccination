@@ -1,5 +1,6 @@
 package com.masai.Services;
 
+import com.masai.Exceptions.IdCardException;
 import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.MemberException;
 import com.masai.Models.Member;
