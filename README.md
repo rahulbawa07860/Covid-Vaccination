@@ -36,14 +36,16 @@
 
 * User and Admin authentication & validation with session uuid having.
 * Admin Features:
+    * Admin can access the details of different Users, Center and Dose.
     * Administrator Role of the entire application
     * Only registered admins with valid session token can add/update/delete driver or user from main database
-    * Admin can access the details of different Users, Doctors, Center and Dose.
+   
     
 * User Features:
+    * Only logged in user can access profile updation and other features
     * Registering themselves with application, and logging in to it.
     * Viewing list of available Center and booking a Appointment.
-    * Only logged in user can access profile updation and other features.
+    .
 
 
 
