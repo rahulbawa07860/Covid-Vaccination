@@ -36,7 +36,7 @@
 
 * The system includes authentication and validation for both users and administrators, utilizing session UUIDs.
 * Admin Features:
-    * dministrators have access to various details pertaining to users, centers, and doses. 
+    * Aministrators have access to various details pertaining to users, centers, and doses. 
     * Admin is responsible for overseeing the application as a whole
     * Only authorized administrators with valid session tokens are able to add, update, or delete drivers or users from the primary database.
     
