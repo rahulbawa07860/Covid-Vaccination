@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.MemberException;
 import com.masai.Models.Member;
 import com.masai.Services.MemberServices;
@@ -33,7 +34,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/getMemberByAadharNo")
-	public ResponseEntity<Member> getMemberByAadharNoHandler(@RequestParam("aadharNo") Long aadharNo) throws MemberException {
+	public ResponseEntity<Member> getMemberByAadharNoHandler(@RequestParam("aadharNo") String aadharNo) throws MemberException {
 		Member member = memberServices.getMemberByAadharNo(aadharNo);
 		
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
