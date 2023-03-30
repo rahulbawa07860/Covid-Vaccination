@@ -8,6 +8,7 @@ import com.masai.Exceptions.AppointmentException;
 import com.masai.Exceptions.MemberException;
 import com.masai.Exceptions.VaccinationCenterException;
 import com.masai.Exceptions.VaccineInventoryException;
+import com.masai.Exceptions.VaccineRegistrationException;
 import com.masai.Models.Appointment;
 
 public interface AppointmentService {
@@ -15,6 +16,6 @@ public interface AppointmentService {
 	public List<Appointment> getAllAppointments(String Key) throws AppointmentException, LoginException;
     public Appointment updateAppointment(String Key, String aadharNo, Appointment appointment) throws AppointmentException, LoginException;
     public Boolean deleteAppointment(String key, String aadharNo) throws AppointmentException, LoginException;
-	public Appointment getAppointment(String key, String aadharNo);
+	public Appointment getAppointment(String key, String aadharNo) throws AppointmentException, LoginException;
     
 }

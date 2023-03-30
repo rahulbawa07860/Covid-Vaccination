@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.Exceptions.AppointmentException;
+import com.masai.Exceptions.MemberException;
+import com.masai.Exceptions.VaccinationCenterException;
+import com.masai.Exceptions.VaccineInventoryException;
+import com.masai.Exceptions.VaccineRegistrationException;
 import com.masai.Models.Appointment;
 import com.masai.Services.AppointmentService;
 

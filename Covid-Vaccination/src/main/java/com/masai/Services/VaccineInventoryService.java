@@ -5,6 +5,8 @@ import java.util.List;
 import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.VaccinationCenterException;
 import com.masai.Exceptions.VaccineInventoryException;
+import com.masai.Models.Vaccine;
+import com.masai.Models.VaccineCount;
 import com.masai.Models.VaccineInventory;
 public interface VaccineInventoryService {
 	public VaccineCount addVaccineCount(String key,Integer inId,Vaccine v,Integer qty) throws LoginException,VaccineInventoryException; 

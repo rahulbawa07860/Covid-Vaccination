@@ -17,12 +17,15 @@ import jakarta.persistence.OneToOne;
 //import lombok.Data;
 
 @Entity
-//@Data             // Generate all getter setter+constructor +to string automatically.(Not Working);
+//@Data             
+// Generate all getter setter+constructor +to string automatically.(Not Working);
 public class VaccinationCenter {
 	
 	
-	@Id           // declare id
-	@GeneratedValue(strategy = GenerationType.AUTO)   // for auto generation id no
+	@Id           
+	// declare id
+	@GeneratedValue(strategy = GenerationType.AUTO)   
+	// for auto generation id no
 	private Integer centerCode;
 	
 	
@@ -31,12 +34,14 @@ public class VaccinationCenter {
 
 	private String address;
 	
-	@OneToOne(cascade = CascadeType.ALL)   // One Vaccination center can have only one Inventory.
+	@OneToOne(cascade = CascadeType.ALL)   
+	// One Vaccination center can have only one Inventory.
     @NotNull
 	private VaccineInventory inventory;
 	
 	
-	@OneToMany    //// One Vaccination center can have many Appointment.
+	@OneToMany    
+	//// One Vaccination center can have many Appointment.
 	@JsonIgnore
 	List<Appointment> appointments = new ArrayList<>();
 

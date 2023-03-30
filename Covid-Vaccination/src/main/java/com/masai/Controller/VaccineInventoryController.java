@@ -13,10 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.masai.Exceptions.LoginException;
+import com.masai.Exceptions.VaccinationCenterException;
+import com.masai.Exceptions.VaccineException;
+import com.masai.Exceptions.VaccineInventoryException;
 import com.masai.Models.VaccinationCenter;
+import com.masai.Models.Vaccine;
+import com.masai.Models.VaccineCount;
 import com.masai.Models.VaccineInventory;
 import com.masai.Services.VaccinationCenterService;
 import com.masai.Services.VaccineInventoryService;
+import com.masai.Services.VaccineService;
 
 @RestController("/inventory")
 public class VaccineInventoryController {
@@ -25,7 +31,7 @@ public class VaccineInventoryController {
 	@Autowired
 	private VaccinationCenterService vaccinationCenterService;
 	@Autowired
-	private VaccineServices vaccineService;
+	private VaccineService vaccineService;
 	
 	@PostMapping("addInventory")
 	public ResponseEntity<VaccineInventory> addNewInventory(@RequestParam("key") String key,@RequestBody VaccineInventory i) throws LoginException, VaccinationCenterException{

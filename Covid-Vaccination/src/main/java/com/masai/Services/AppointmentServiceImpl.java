@@ -13,11 +13,14 @@ import com.masai.Exceptions.AppointmentException;
 import com.masai.Exceptions.MemberException;
 import com.masai.Exceptions.VaccinationCenterException;
 import com.masai.Exceptions.VaccineInventoryException;
+import com.masai.Exceptions.VaccineRegistrationException;
 import com.masai.Models.Appointment;
+import com.masai.Models.CurrentMemberUserSession;
 import com.masai.Models.VaccinationCenter;
 import com.masai.Models.VaccineInventory;
 import com.masai.Models.VaccineRegistration;
 import com.masai.Repository.AppointmentRepository;
+import com.masai.Repository.CurrentMemberUserSessionRepo;
 import com.masai.Repository.MemberRepo;
 import com.masai.Repository.VaccinationCenterRepository;
 import com.masai.Repository.VaccineInventoryRepository;
@@ -31,7 +34,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Autowired
 	private VaccineInventoryRepository VccInvRepo;
     @Autowired
-	private CurrentUserSessionRepo currSessRepo;
+	private CurrentMemberUserSessionRepo currSessRepo;
 	@Autowired
 	private VaccineRegistrationRepository VccRegRepo; 
 	@Autowired
@@ -43,11 +46,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 			throws LoginException, MemberException, VaccinationCenterException, VaccineRegistrationException,
 			VaccineInventoryException, AppointmentException {
 		// TODO Auto-generated method stub
-		CurrentUserSession  currentSession = currSessRepo.findByUuid(key);
+		CurrentMemberUserSession  currentSession = currSessRepo.findByUuid(key);
 		if(currentSession!=null)
 		{
-			if(!currentSession.getAdmin())
-			{
+			
 				Member member = memberRepo.findByAdharcardNo(aadharNo);
 				if(member!=null)
 				{
@@ -88,10 +90,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 				else {
 					throw new MemberException(" No member found!");
 				}
-			}
-			else {
-				throw new LoginException("Please login as Member");
-			}
+			
 		}
 		else {
 			throw new LoginException(" Please login first!");
@@ -100,12 +99,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public List<Appointment> getAllAppointments(String Key) throws AppointmentException, LoginException {
 		// TODO Auto-generated method stub
-		CurrentUserSession  currentSession = currSessRepo.findByUuid(Key);
+		CurrentMemberUserSession  currentSession = currSessRepo.findByUuid(Key);
 		if(currentSession!=null)
 		{
 			
-			if(!currentSession.getAdmin())
-			{
+			
 				List<Appointment> appointments = AppointmentRepo.findAll();
 				if(!appointments.isEmpty())
 				{
@@ -113,10 +111,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 				}else {
 					throw new AppointmentException("No appointment present");
 				}
-			}else {
-				throw new LoginException(" Please login as admin!");
-				
-			}
+			
 				
 			}
 			
@@ -129,11 +124,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment updateAppointment(String Key, String aadharNo, Appointment appointment)
 			throws AppointmentException, LoginException {
 		// TODO Auto-generated method stub
-		CurrentUserSession  currentSession = currSessRepo.findByUuid(Key);
+		CurrentMemberUserSession  currentSession = currSessRepo.findByUuid(Key);
 		if(currentSession!=null)
 		{
-			if(!currentSession.getAdmin())
-			{
+			
 				Member member = memberRepo.findByAdharcardNo(aadharNo);
 				if(member.getAppointment()!=null)
 				{
@@ -147,10 +141,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 				else {
 					throw new AppointmentException("No appointment found");
 				}
-			}
-			else {
-				throw new LoginException(" Please login as admin!");
-			}
+			
 		}
 		else {
 			throw new LoginException(" Please login first!");
@@ -159,7 +150,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public Boolean deleteAppointment(String key, String aadharNo) throws AppointmentException, LoginException {
 		// TODO Auto-generated method stub
-		CurrentUserSession  currentSession = currSessRepo.findByUuid(key);
+		CurrentMemberUserSession  currentSession = currSessRepo.findByUuid(key);
 		if(currentSession!=null)
 		{
 			Member member = memberRepo.findByAdharcardNo(aadharNo);
@@ -177,9 +168,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 		}
 	}
 	@Override
-	public Appointment getAppointment(String key, String aadharNo) {
+	public Appointment getAppointment(String key, String aadharNo) throws AppointmentException, LoginException {
 		// TODO Auto-generated method stub
-		CurrentUserSession  currentSession = currSessRepo.findByUuid(key);
+		CurrentMemberUserSession  currentSession = currSessRepo.findByUuid(key);
 		if(currentSession!=null)
 		{
 			Member member = memberRepo.findByAdharcardNo(aadharNo);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.masai.Models.Vaccine;
 import com.masai.Models.VaccineCount;
 import com.masai.Models.VaccineInventory;
 

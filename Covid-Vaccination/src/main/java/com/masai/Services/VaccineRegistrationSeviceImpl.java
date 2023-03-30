@@ -9,17 +9,21 @@ import org.springframework.stereotype.Service;
 import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.MemberException;
 import com.masai.Exceptions.VaccineRegistrationException;
+import com.masai.Models.CurrentMemberUserSession;
 import com.masai.Models.Member;
 import com.masai.Models.VaccineRegistration;
+import com.masai.Repository.CurrentMemberUserSessionRepo;
+import com.masai.Repository.MemberRepo;
 import com.masai.Repository.VaccineRegistrationRepository;
 
+@Service
 public class VaccineRegistrationSeviceImpl implements VaccineRegistrationService {
 	
 	@Autowired
 	private VaccineRegistrationRepository vcRegRepo;
 	
 	@Autowired
-	private CurrentUserRepo currRepo;
+	private CurrentMemberUserSessionRepo currRepo;
 	
 	@Autowired
 	private MemberRepo memRepo;
@@ -28,7 +32,7 @@ public class VaccineRegistrationSeviceImpl implements VaccineRegistrationService
 	public VaccineRegistration addVaccineRegistration(String key, String aadharNo, VaccineRegistration vcr)
 			throws LoginException, VaccineRegistrationException, MemberException {
 		
-		CurrentUser cus = currRepo.findByUuid(key);
+		CurrentMemberUserSession cus = currRepo.findByUuid(key);
         
 		if( cus != null ) {
 			
@@ -66,7 +70,7 @@ public class VaccineRegistrationSeviceImpl implements VaccineRegistrationService
 	public VaccineRegistration getVaccineRegistrationByMobNo(String key, String mobileno)
 			throws LoginException, VaccineRegistrationException {
 		
-         CurrentUser cus = currRepo.findByUuid(key);
+         CurrentMemberUserSession cus = currRepo.findByUuid(key);
         
 		 if( cus != null ) {
 			 VaccineRegistration VR = vcRegRepo.findByMobileno(mobileno);
@@ -94,7 +98,7 @@ public class VaccineRegistrationSeviceImpl implements VaccineRegistrationService
 			throws LoginException, VaccineRegistrationException {
 		
 		
-		 CurrentUser cus = currRepo.findByUuid(key);
+		 CurrentMemberUserSession cus = currRepo.findByUuid(key);
 	        
 		 if( cus != null ) {
 			 
@@ -122,7 +126,7 @@ public class VaccineRegistrationSeviceImpl implements VaccineRegistrationService
 	public List<Member> getAllMembersByMobNo(String key, String mobileno)
 			throws LoginException, VaccineRegistrationException {
 		
-		CurrentUser cus = currRepo.findByUuid(key);
+		CurrentMemberUserSession cus = currRepo.findByUuid(key);
         
 		 if( cus != null ) {
 			 
@@ -160,7 +164,7 @@ public class VaccineRegistrationSeviceImpl implements VaccineRegistrationService
 	public VaccineRegistration updateVaccineRegistration(String key, VaccineRegistration vcr)
 			throws LoginException, VaccineRegistrationException {
 		
-		CurrentUser cus = currRepo.findByUuid(key);
+		CurrentMemberUserSession cus = currRepo.findByUuid(key);
         
 		 if( cus != null ) {
 		
@@ -194,7 +198,7 @@ public class VaccineRegistrationSeviceImpl implements VaccineRegistrationService
 			throws LoginException, VaccineRegistrationException {
 		
 		
-		CurrentUser cus = currRepo.findByUuid(key);
+		CurrentMemberUserSession cus = currRepo.findByUuid(key);
         
 		 if( cus != null ) {
 			 Optional<VaccineRegistration> optional = vcRegRepo.findById(vcr.getRegId());

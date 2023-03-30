@@ -13,7 +13,7 @@ import com.masai.Models.Member;
 @Repository
 public interface MemberRepo extends JpaRepository<Member, Integer>{
 	
-	@Query("from Member where idCard.panCard.panoNo=:pnum")
+	@Query("from Member where idCard.panCard.panNo=:pnum")
 	public Member findByPanNo(@Param("pnum") String panno);
 	
 	@Query("from Member where idCard.Id=:card")

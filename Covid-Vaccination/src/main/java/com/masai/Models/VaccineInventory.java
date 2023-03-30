@@ -10,7 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class VaccineInventory {
@@ -18,7 +18,7 @@ public class VaccineInventory {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer inventoryId;
 	private LocalDate date;
-	@OneToOne
+	@OneToMany
 	@JsonIgnore
 	private Set<VaccineCount> vaccineCount;
 	public Integer getInventoryId() {

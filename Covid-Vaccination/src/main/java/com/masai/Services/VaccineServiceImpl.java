@@ -4,22 +4,28 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.masai.Repository.CurrentAdminUserSessionRepo;
+import com.masai.Repository.CurrentMemberUserSessionRepo;
 import com.masai.Repository.VaccineRepository;
 import com.masai.Exceptions.LoginException;
 import com.masai.Exceptions.VaccineException;
 import com.masai.Models.Vaccine;
 
+@Service
 public class VaccineServiceImpl implements VaccineService{
 	
 	@Autowired
-	private CurrentUserRepo cuRepo;
+	private CurrentMemberUserSessionRepo cuURepo;
+	
+	@Autowired
+	private CurrentAdminUserSessionRepo cuARepo;
 	
 	@Autowired
 	private VaccineRepository vaccineRepo;
 
 	@Override
 	public Vaccine addVaccine(String key, Vaccine v) throws LoginException {
-		if(cuRepo.findByUuid(key)!=null) {
+		if(cuARepo.findByUuid(key)!=null) {
 			return vaccineRepo.save(v);
 		}else {
 			throw new LoginException("Please login as an admin first ");
@@ -28,7 +34,7 @@ public class VaccineServiceImpl implements VaccineService{
 
 	@Override
 	public List<Vaccine> allVaccines(String key) throws LoginException, VaccineException {
-		if(cuRepo.findByUuid(key)!=null) {
+		if(cuARepo.findByUuid(key)!=null) {
 			List<Vaccine> list=vaccineRepo.findAll();
 			if(list.size()!=0) {
 				return list;
@@ -42,7 +48,7 @@ public class VaccineServiceImpl implements VaccineService{
 
 	@Override
 	public Vaccine getVaccineByName(String key, String name) throws LoginException, VaccineException {
-		if(cuRepo.findByUuid(key)!=null) {
+		if(cuARepo.findByUuid(key)!=null) {
 			Vaccine v= vaccineRepo.findByName(name);
 			if(v==null) {
 				throw new VaccineException("Sorry, Vaccine Not Found");
@@ -56,7 +62,7 @@ public class VaccineServiceImpl implements VaccineService{
 
 	@Override
 	public Vaccine getVaccineById(String key, Integer id) throws LoginException, VaccineException {
-		if(cuRepo.findByUuid(key)!=null) {
+		if(cuARepo.findByUuid(key)!=null) {
 			return vaccineRepo.findById(id).orElseThrow(()->new VaccineException("Sorry, Vaccine Not Found"));
 		}else {
 			throw new LoginException("Please login as an admin first ");
@@ -65,7 +71,7 @@ public class VaccineServiceImpl implements VaccineService{
 
 	@Override
 	public Vaccine updateVaccine(String key, Integer id, Vaccine v) throws LoginException, VaccineException {
-		if(cuRepo.findByUuid(key)!=null) {
+		if(cuARepo.findByUuid(key)!=null) {
 			Vaccine vaccine=vaccineRepo.findById(id).orElseThrow(()->new VaccineException("Sorry, Vaccine Not Found"));
 			vaccine.setVaccineName(v.getVaccineName());
 			vaccine.setDescription(v.getDescription());
@@ -77,7 +83,7 @@ public class VaccineServiceImpl implements VaccineService{
 
 	@Override
 	public Boolean deleteVaccine(String key, Integer id) throws LoginException, VaccineException {
-		if(cuRepo.findByUuid(key)!=null) {
+		if(cuARepo.findByUuid(key)!=null) {
 			Vaccine vaccine=vaccineRepo.findById(id).orElseThrow(()->new VaccineException("Sorry, Vaccine Not Found"));
 			if(vaccine!=null) {
 				vaccineRepo.delete(vaccine);
