@@ -74,7 +74,7 @@ public class Member {
 	@JsonIgnore
 	private Vaccine vaccine;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "member")
 	private IdCard idCard;
 	
 	@OneToOne(cascade = CascadeType.ALL)
