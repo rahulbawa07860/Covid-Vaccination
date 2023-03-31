@@ -45,55 +45,89 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment addAppointment(String key, Appointment appointment, String aadharNo, Integer centerCode)
 			throws LoginException, MemberException, VaccinationCenterException, VaccineRegistrationException,
 			VaccineInventoryException, AppointmentException {
-		// TODO Auto-generated method stub
-		CurrentMemberUserSession  currentSession = currSessRepo.findByUuid(key);
-		if(currentSession!=null)
-		{
+
+		//first we will check for logged in or not
+		CurrentMemberUserSession cus = currSessRepo.findByUuid(key);
+		
+		//if logged in
+		if( cus != null ) {
 			
+			//if user is admin or member
+		
+				
+				//if user is member then 
+				//here we need to find member to add appointment: 
 				Member member = memberRepo.findByAdharcardNo(aadharNo);
-				if(member!=null)
-				{
-					VaccineRegistration vaccineregistration = VccRegRepo.findByMobileno(appointment.getMobileNo());
-					if(vaccineregistration.getMembers().contains(member))
-					{
-						Optional<VaccinationCenter> optional = VccCenRepo.findById(centerCode);
-						if(optional.isPresent())
-						{
-							VaccinationCenter vaccinationCenter = optional.get();
+				
+				//if member found then we will check for Vaccine Registration by mob no of appointment:
+				if( member != null ) {
+					
+					VaccineRegistration vr = VccRegRepo.findByMobileno(appointment.getMobileNo());
+					
+					//if vaccine registration found then we will check for member is in members list of vaccine registration:
+					if( vr.getMembers().contains(member) ) {
+						
+						//if member found in registration then we will check for Vaccination center:
+						Optional<VaccinationCenter> opt2 = VccCenRepo.findById(centerCode);
+						
+						//center found then we will save and return appointment:
+						if( opt2.isPresent() ) {
+							
+							VaccinationCenter vaccinationCenter = opt2.get();
+							
 							VaccineInventory inventory = vaccinationCenter.getInventory();
-							if(!inventory.getVaccineCount().isEmpty())
-							{
-								if(member.getDose1Status())
-								{
-									member.setDose2Status(appointment.getBookingStatus());
-								}
-								else {
+							
+							//if inventory is not empty
+							if( ! inventory.getVaccineCount().isEmpty() ) {
+								
+								//first we will check if member has already taken dose1:
+								if( member.getDose1Status() ) {
+									
+									//if dose 1 true then we will assign dose 2 as true:
+									member.setDose1Status(appointment.getBookingStatus());
+								}else {
+									
 									member.setDose1Status(appointment.getBookingStatus());
 									member.setDose2Date(appointment.getDateOfBooking().plusMonths(3));
 								}
+								
+								//saved member:
 								memberRepo.save(member);
+								
+								//associated member with appointment:
 								appointment.setMember(member);
-								vaccinationCenter.getAppointments().add(appointment);
+								
+//								vaccinationCenter.getAppointments().add(appointment);
+								
+								//saved and returned appointment:
 								return AppointmentRepo.save(appointment);
+								
 							}else {
-								throw new VaccineInventoryException("Vaccine inventory is empty!");
+								
+								throw new VaccineInventoryException("Vaccine inventory is empty !");
 							}
+							
+							
+						}else {
+							
+							throw new VaccinationCenterException("No Vaccination Center found !");
 						}
-						else {
-							throw new VaccinationCenterException("No Vaccination Center found!");
-						}
+						
+					}else {
+						
+						throw new VaccineRegistrationException("No Vaccine Registration found !");
 					}
-					else {
-						throw new VaccineRegistrationException("No Vaccine Registration found!");
-					}
+					
+					
+				}else {
+					
+					throw new MemberException(" No member found ! ");
 				}
-				else {
-					throw new MemberException(" No member found!");
-				}
+				
 			
-		}
-		else {
-			throw new LoginException(" Please login first!");
+		}else {
+			
+			throw new LoginException(" Please login first ! ");
 		}
 	}
 	@Override

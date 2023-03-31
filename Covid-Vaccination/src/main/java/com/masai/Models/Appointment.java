@@ -25,13 +25,13 @@ import lombok.ToString;
 @Entity
 public class Appointment {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer bookingId;
 	private String mobileNo;
 	private String slot;
 	private LocalDate dateOfBooking = LocalDate.now(); 
+	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JsonIgnore
 	private Member member;
 	
 	private Boolean bookingStatus;

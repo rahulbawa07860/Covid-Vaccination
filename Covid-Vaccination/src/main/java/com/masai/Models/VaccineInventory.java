@@ -6,7 +6,9 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,10 +17,10 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class VaccineInventory {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer inventoryId;
 	private LocalDate date;
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "inventory",fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<VaccineCount> vaccineCount;
 	public Integer getInventoryId() {
