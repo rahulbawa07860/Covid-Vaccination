@@ -10,7 +10,7 @@ import java.util.Objects;
 public class Vaccine {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer vaccineId;
 	private String vaccineName;
 	private String description;

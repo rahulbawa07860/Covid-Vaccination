@@ -7,9 +7,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -19,7 +21,7 @@ import jakarta.validation.constraints.Size;
 public class Member {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer memberId;
 	
 	@Email
@@ -58,7 +60,7 @@ public class Member {
 		this.confirmPassword = confirmPassword;
 	}
 
-	private Boolean dose1Status = false;
+	private Boolean dose1Status = false ;
 	
 	private Boolean dose2Status = false;
 	
@@ -66,7 +68,7 @@ public class Member {
 	
 	private LocalDate dose2Date = null;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "member")
 	@JsonIgnore
 	private Appointment appointment;
 	
@@ -74,10 +76,12 @@ public class Member {
 	@JsonIgnore
 	private Vaccine vaccine;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "member",fetch = FetchType.EAGER)
+	@JsonIgnore
 	private IdCard idCard;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
 	private VaccineRegistration vaccineRegistration;
 	
 	public Member() {

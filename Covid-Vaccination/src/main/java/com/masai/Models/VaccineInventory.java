@@ -15,7 +15,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 public class VaccineInventory {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer inventoryId;
 	private LocalDate date;
 	@OneToMany

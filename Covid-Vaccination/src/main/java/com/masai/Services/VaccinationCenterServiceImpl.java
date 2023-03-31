@@ -73,7 +73,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public VaccinationCenter getVaccinationCenterById(String key, Integer id) throws LoginException, VaccinationCenterException {
 		
 	   // First we will check logging status here.
-		CurrentMemberUserSession cusession = SessRepo.findByUuid(key);
+		CurrentAdminUserSession cusession = AessRepo.findByUuid(key);
 		//if logged In then
 		if(cusession != null) {
 			Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(id);

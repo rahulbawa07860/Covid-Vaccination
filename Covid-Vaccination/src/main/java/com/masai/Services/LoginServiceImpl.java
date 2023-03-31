@@ -72,7 +72,7 @@ public class LoginServiceImpl implements LoginService{
 			
 			if(memberUserSession!=null) throw new LoginException("Member is already logged in");
 			
-			if(existingMember.getPassword()==user.getPassword()) {
+			if(existingMember.getPassword().equals(user.getPassword())) {
 				CurrentMemberUserSession mSession = new CurrentMemberUserSession();
 				mSession.setMemberId(existingMember.getMemberId());
 				mSession.setLoginTime(LocalDateTime.now());

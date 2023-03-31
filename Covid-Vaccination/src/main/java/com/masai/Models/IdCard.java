@@ -54,7 +54,6 @@ public class IdCard {
 
 	
 	@OneToOne(cascade = CascadeType.ALL)
-	@JsonIgnore
 	private Member member;
 
 	public Integer getId() {

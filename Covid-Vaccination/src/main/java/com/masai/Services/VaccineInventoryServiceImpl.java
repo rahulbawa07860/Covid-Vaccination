@@ -45,6 +45,7 @@ public class VaccineInventoryServiceImpl implements VaccineInventoryService{
 		    	c.setInventory(inventory);
 		    	VaccineCount eneter = vaccineCountRepo.save(c);
 		    	vaccineInventoryRepo.save(inventory);
+		    	
 		    	return eneter;
 		    	
 		    }
