@@ -121,7 +121,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public VaccinationCenter updateVaccinationCenter(String key, VaccinationCenter center) throws LoginException, VaccinationCenterException {
 		
 		  // First we will check logging status here.
-			CurrentMemberUserSession cusession = SessRepo.findByUuid(key);
+			CurrentAdminUserSession cusession = AessRepo.findByUuid(key);
 			//if logged In then
 			if(cusession != null) {
 				// if user is admin or member;
@@ -157,7 +157,7 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 	public Boolean deleteVaccinationCenter(String key, Integer id) throws LoginException, VaccinationCenterException {
 		
 		 // First we will check logging status here.
-		CurrentMemberUserSession cusession = SessRepo.findByUuid(key);
+		CurrentAdminUserSession cusession = AessRepo.findByUuid(key);
 		//if logged In then
 		if(cusession != null) {
 			// if user is admin or member;

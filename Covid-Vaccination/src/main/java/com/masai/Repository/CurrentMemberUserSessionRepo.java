@@ -8,4 +8,6 @@ public interface CurrentMemberUserSessionRepo extends JpaRepository<CurrentMembe
 
 	CurrentMemberUserSession findByUuid(String key);
 
+	CurrentMemberUserSession findByMemberId(Integer memberId);
+
 }
