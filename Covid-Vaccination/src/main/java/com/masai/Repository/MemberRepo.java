@@ -26,6 +26,8 @@ public interface MemberRepo extends JpaRepository<Member, Integer>{
 
 	public Optional<Member> findByIdCard(Optional<IdCard> idCard);
 
+	public Member findByEmail(String email);
+
 	
 	
 	

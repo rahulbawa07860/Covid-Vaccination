@@ -49,14 +49,14 @@ public class MemberController {
 		return new ResponseEntity<Member>(member, HttpStatus.OK);
 	}
 	
-	@PutMapping("/addMember")
+	@PostMapping("/addMember")
 	public ResponseEntity<Member> addmemberHandler(@RequestBody Member member) throws LoginException, MemberException {
 		Member m1 = memberServices.addMember(member);
 		
 		return new ResponseEntity<Member>(m1, HttpStatus.OK);
 	}
 	
-	@PostMapping("/updateMember/{key}/{cardId}")
+	@PutMapping("/updateMember/{key}/{cardId}")
 	public ResponseEntity<Member> updatemember(@PathVariable("key") String key,@PathVariable("cardId") Integer cardId,@RequestBody MemberUpdateDTO memberDto) throws LoginException, MemberException {
 		Member m1 = memberServices.updateMember(key, cardId, memberDto);
 		

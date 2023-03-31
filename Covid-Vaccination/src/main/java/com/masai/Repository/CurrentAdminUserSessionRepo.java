@@ -8,4 +8,6 @@ public interface CurrentAdminUserSessionRepo extends JpaRepository<CurrentAdminU
 
 	CurrentAdminUserSession findByUuid(String key);
 
+	CurrentAdminUserSession findByAdminId(Integer adminId);
+
 }
