@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.masai.Models.VaccinationCenter;
 
 
-@Repository
+@Repository  /* JPA Repository contains the APIs for basic CRUD operations,
+                the APIS for pagination, and the APIs for sorting.*/
 public interface VaccinationCenterRepository extends JpaRepository<VaccinationCenter, Integer>{
 	
 
