@@ -76,6 +76,8 @@ public class VaccinationCenterServiceImpl implements VaccinationCenterService{
 		CurrentAdminUserSession cusession = AessRepo.findByUuid(key);
 		//if logged In then
 		if(cusession != null) {
+			
+			//This is handy since we can use the Optional API in the calling method:
 			Optional<VaccinationCenter> opt = vaccineCenterRepo.findById(id);
 			//If vaccination center  is present.
 			if(opt.isPresent()) {

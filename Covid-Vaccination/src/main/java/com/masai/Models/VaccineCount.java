@@ -18,7 +18,7 @@ public class VaccineCount {
 	@OneToOne
 	private Vaccine vaccine;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JsonIgnore
+	@JsonIgnore   // @JsonIgnoreProperties ignores the specified logical properties in JSON serialization and deserialization
 	private VaccineInventory inventory;
 	
 	private Integer inId;
