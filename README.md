@@ -1,7 +1,7 @@
 # REST API for an Covid-19 Vaccination
 
-* We have developed this REST API for an Covid-19 Vaccination. This API performs all the fundamental CRUD operations of any Online Cab Booking platform with user validation at every step.
-* This project is developed by team of 5 Back-end Developers during  Project Construct week in Masai School 
+* A REST API has been created specifically for Covid-19 Vaccination purposes, which includes all the basic CRUD operations found in an Online Cab Booking platform, with user validation implemented throughout the process. 
+* The project was undertaken by a team of five Back-end Developers during the Project Construct week at Masai School
 
 ## Contributors
 
@@ -49,7 +49,9 @@
 
 
 ## ER Diagram
- <img width="730" alt="image" src="https://user-images.githubusercontent.com/111387553/228755126-7e43b46d-1f5b-4fef-9b3a-1fa367d942a4.png">
+![er](https://user-images.githubusercontent.com/111387553/229346596-c15994d7-7515-4d4b-93a4-a4ccd0e41423.jpeg)
+
+#The only way to do great work is to love what you do &#x1F60A;
 
 
 
